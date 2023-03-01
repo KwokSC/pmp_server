@@ -1,0 +1,12 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: pmp_server
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 19980518
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/pmp_server
+
