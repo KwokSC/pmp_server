@@ -2,11 +2,14 @@ server:
   port: 8080
 
 spring:
-  application:
-    name: pmp_server
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/pmp_server
     username: root
     password: 19980518
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/pmp_server
+  redis:
+    host: localhost
+    port: 6379
+    timeout: 3000
 
+mybatis:
+  mapper-locations: classpath:/mapper/*.xml
