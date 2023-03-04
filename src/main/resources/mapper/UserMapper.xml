@@ -15,4 +15,9 @@
         select * from user_info where user_account = #{userAccount}
     </select>
 
+    <insert id="addUser" parameterType="com.chunkie.pmp_server.entity.User">
+        insert into user_info(user_account, user_password, user_email, user_phone, user_activate)
+        values (#{userAccount}, #{userPassword}, #{userEmail}, #{userPhone}, 1)
+    </insert>
+
 </mapper>

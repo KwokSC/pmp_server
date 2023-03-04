@@ -10,15 +10,15 @@ import java.util.UUID;
 public class AuthService {
 
     @Resource
-    private StringRedisTemplate redisTemplate;
+    private StringRedisTemplate stringRedisTemplate;
 
     public String generateToken(String account){
         String authToken = UUID.randomUUID().toString();
-        redisTemplate.opsForValue().set(authToken, account);
+        stringRedisTemplate.opsForValue().set(authToken, account);
         return authToken;
     }
 
     public boolean validateToken(String token){
-        return redisTemplate.opsForValue().get(token) != null;
+        return stringRedisTemplate.opsForValue().get(token) != null;
     }
 }
