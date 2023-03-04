@@ -4,6 +4,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -18,7 +19,7 @@ public class AuthService {
         return authToken;
     }
 
-    public boolean validateToken(String token){
-        return stringRedisTemplate.opsForValue().get(token) != null;
+    public boolean validateToken(String token, String account){
+        return Objects.equals(stringRedisTemplate.opsForValue().get(token), account);
     }
 }
