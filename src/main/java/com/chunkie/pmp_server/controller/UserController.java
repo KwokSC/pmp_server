@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -21,32 +22,22 @@ public class UserController {
 
     @RequestMapping("/register")
     public ResponseObj createAccount(@RequestBody User user){
-        ResponseObj responseObj = new ResponseObj();
-        int result = userService.createAccount(user);
-        if (result!=0){
-            responseObj.setCode(Constants.Code.NORMAL);
-            responseObj.setMsg(Constants.Msgs.SUCCESS);
-            responseObj.setData("Create an account successfully");
+        user.setUserId(UUID.randomUUID().toString());
+        String authToken = userService.createAccount(user);
+        if (!authToken.isEmpty()){
+            return new ResponseObj(authToken, Constants.Code.NORMAL, Constants.Msgs.SUCCESS);
         }else {
-            responseObj.setCode(Constants.Code.EXCEPTION);
-            responseObj.setMsg(Constants.Msgs.FAIL);
-            responseObj.setData("Fail to create an account");
+            return new ResponseObj("Fail to create an account", Constants.Code.EXCEPTION, Constants.Msgs.FAIL);
         }
-        return  responseObj;
     }
 
     @RequestMapping("/login")
     public ResponseObj login(@RequestBody User user){
         String authToken = userService.authenticateUser(user);
-        ResponseObj responseObj = new ResponseObj();
-        if(!authToken.isEmpty()){
-        responseObj.setCode(Constants.Code.NORMAL);
-        responseObj.setMsg(Constants.Msgs.SUCCESS);
-        responseObj.setData(authToken);
-    }else {
-        responseObj.setCode(Constants.Code.EXCEPTION);
-        responseObj.setMsg(Constants.Msgs.FAIL);
-    }
-        return responseObj;
+        if (!authToken.isEmpty()){
+            return new ResponseObj(authToken, Constants.Code.NORMAL, Constants.Msgs.SUCCESS);
+        }else {
+            return new ResponseObj("Fail to login", Constants.Code.EXCEPTION, Constants.Msgs.FAIL);
+        }
     }
 }
