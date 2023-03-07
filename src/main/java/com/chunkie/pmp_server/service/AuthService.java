@@ -23,7 +23,7 @@ public class AuthService {
         return authToken;
     }
 
-    public boolean validateToken(String token, String account){
-        return Objects.equals(stringRedisTemplate.opsForValue().get(token), account);
+    public String getUserByToken(String token){
+        return stringRedisTemplate.opsForValue().get(token);
     }
 }

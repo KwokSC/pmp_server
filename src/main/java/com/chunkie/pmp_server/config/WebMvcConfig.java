@@ -6,11 +6,8 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.annotation.Resource;
-
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
-
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

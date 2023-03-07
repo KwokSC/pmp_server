@@ -25,9 +25,8 @@ public class AuthInterceptor implements HandlerInterceptor {
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
         if (method.isAnnotationPresent(LoginRequired.class)) {
-            String authToken = request.getHeader("Auth");
-            String account = method.getAnnotation(LoginRequired.class).account();
-            if (authToken != null && authService.validateToken(authToken, account)) {
+            String authToken = request.getHeader("Authorization");
+            if (authToken != null && authService.getUserByToken(authToken)!=null) {
                 return true;
             } else {
                 response.setStatus(HttpStatus.UNAUTHORIZED.value());
