@@ -28,11 +28,11 @@ public class UserService {
 
     public String authenticateUser(User user){
         User u = userMapper.selectByAccount(user.getUserAccount());
-        if (u.getUserPassword().equals(user.getUserPassword())){
+        if (u != null && u.getUserPassword().equals(user.getUserPassword())){
             String authToken = authService.generateToken(user.getUserAccount());
             return authToken;
         }else
-            return null;
+            return "";
     }
 
 }

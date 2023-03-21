@@ -1,6 +1,7 @@
 package com.chunkie.pmp_server.interceptor;
 
 import com.chunkie.pmp_server.annotation.LoginRequired;
+import com.chunkie.pmp_server.exception.UnauthorizedException;
 import com.chunkie.pmp_server.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class AuthInterceptor implements HandlerInterceptor {
     private AuthService authService;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
         if (!(handler instanceof HandlerMethod)) return true;
 
         HandlerMethod handlerMethod = (HandlerMethod) handler;
@@ -29,8 +30,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             if (authToken != null && authService.getUserByToken(authToken)!=null) {
                 return true;
             } else {
-                response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                return false;
+                throw new UnauthorizedException();
             }
         }else return true;
     }

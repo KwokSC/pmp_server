@@ -20,4 +20,8 @@ public class Profile {
     private String profileBreed;
 
     private String profileGoal;
+
+    private float profileLatitude;
+
+    private float profileLongitude;
 }

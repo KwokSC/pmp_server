@@ -6,6 +6,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.Duration;
 import java.util.Objects;
 
 @Service
@@ -19,9 +20,10 @@ public class AuthService {
                 .setSubject(account)
                 .signWith(SignatureAlgorithm.HS256, "secret-key")
                 .compact();;
-        stringRedisTemplate.opsForValue().set(authToken, account);
+        stringRedisTemplate.opsForValue().set(authToken, account, Duration.ofMinutes(30));
         return authToken;
     }
+
 
     public String getUserByToken(String token){
         return stringRedisTemplate.opsForValue().get(token);
