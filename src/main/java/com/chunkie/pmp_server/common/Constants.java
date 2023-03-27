@@ -2,7 +2,7 @@ package com.chunkie.pmp_server.common;
 
 /**
  * @Description:
- * @ClassName: MsgConstants
+ * @ClassName: Constants
  * @Author: SichengGuo
  * @Date: 2021/12/14 17:22
  * @Version: 1.0
@@ -21,8 +21,6 @@ public interface Constants {
 
     interface AWS{
         String BUCKET = "pmp_server_bucket";
-        String ACCESS_KEY = "AKIAWOXAXXCRKAHULNK6";
-        String SECRET_KEY = "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";
     }
 
 }
