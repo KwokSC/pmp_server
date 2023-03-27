@@ -1,6 +1,5 @@
 package com.chunkie.pmp_server.service;
 
-import com.chunkie.pmp_server.common.Constants;
 import com.chunkie.pmp_server.entity.User;
 import com.chunkie.pmp_server.mapper.UserMapper;
 import org.springframework.stereotype.Service;
