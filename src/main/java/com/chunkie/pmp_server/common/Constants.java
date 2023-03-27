@@ -9,7 +9,7 @@ package com.chunkie.pmp_server.common;
  */
 public interface Constants {
 
-    interface Msgs{
+    interface Msg {
         String SUCCESS = "Successful request";
         String FAIL = "Fail request";
     }

@@ -24,12 +24,12 @@ public class UserController {
     public ResponseObj createAccount(@RequestBody User user){
         user.setUserId(UUID.randomUUID().toString());
         String authToken = userService.createAccount(user);
-        return !authToken.isEmpty() ? new ResponseObj(authToken, Constants.Code.NORMAL, Constants.Msgs.SUCCESS) : new ResponseObj("Fail to create an account", Constants.Code.EXCEPTION, Constants.Msgs.FAIL);
+        return !authToken.isEmpty() ? new ResponseObj(authToken, Constants.Code.NORMAL, Constants.Msg.SUCCESS) : new ResponseObj("Fail to create an account", Constants.Code.EXCEPTION, Constants.Msg.FAIL);
     }
 
     @RequestMapping("/login")
     public ResponseObj login(@RequestBody User user){
         String authToken = userService.authenticateUser(user);
-        return !authToken.isEmpty() ? new ResponseObj(authToken, Constants.Code.NORMAL, Constants.Msgs.SUCCESS) : new ResponseObj("Fail to login", Constants.Code.EXCEPTION, Constants.Msgs.FAIL);
+        return !authToken.isEmpty() ? new ResponseObj(authToken, Constants.Code.NORMAL, Constants.Msg.SUCCESS) : new ResponseObj("Fail to login", Constants.Code.EXCEPTION, Constants.Msg.FAIL);
     }
 }
