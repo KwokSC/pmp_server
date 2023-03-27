@@ -17,10 +17,8 @@ public class UserService {
     private AuthService authService;
 
     public String createAccount(User user){
-        int result = userMapper.addUser(user);
-        if (result!=0){
-            String authToken = authService.generateToken(user.getUserAccount());
-            return authToken;
+        if (userMapper.addUser(user)!=0){
+            return authService.generateToken(user.getUserId());
         }else {
             return "";
         }
@@ -29,8 +27,7 @@ public class UserService {
     public String authenticateUser(User user){
         User u = userMapper.selectByAccount(user.getUserAccount());
         if (u != null && u.getUserPassword().equals(user.getUserPassword())){
-            String authToken = authService.generateToken(user.getUserAccount());
-            return authToken;
+            return authService.generateToken(u.getUserId());
         }else
             return "";
     }

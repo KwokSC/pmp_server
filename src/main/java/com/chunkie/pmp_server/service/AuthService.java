@@ -1,5 +1,6 @@
 package com.chunkie.pmp_server.service;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -7,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.time.Duration;
-import java.util.Objects;
 
 @Service
 public class AuthService {
@@ -15,17 +15,21 @@ public class AuthService {
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
-    public String generateToken(String account){
+    public String generateToken(String id){
         String authToken = Jwts.builder()
-                .setSubject(account)
+                .setSubject(id)
                 .signWith(SignatureAlgorithm.HS256, "secret-key")
                 .compact();;
-        stringRedisTemplate.opsForValue().set(authToken, account, Duration.ofMinutes(30));
+        stringRedisTemplate.opsForValue().set(authToken, id, Duration.ofMinutes(30));
         return authToken;
     }
 
 
     public String getUserByToken(String token){
-        return stringRedisTemplate.opsForValue().get(token);
+        Claims claims = Jwts.parser()
+                .setSigningKey("secret-key")
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.getSubject();
     }
 }

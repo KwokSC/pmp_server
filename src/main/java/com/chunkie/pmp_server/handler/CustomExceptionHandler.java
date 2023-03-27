@@ -1,4 +1,4 @@
-package com.chunkie.pmp_server.config;
+package com.chunkie.pmp_server.handler;
 
 import com.chunkie.pmp_server.common.ResponseObj;
 import com.chunkie.pmp_server.exception.UnauthorizedException;

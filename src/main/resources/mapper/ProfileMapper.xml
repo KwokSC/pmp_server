@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chunkie.pmp_server.mapper.ProfileMapper">
+
+    <resultMap id="BaseResultMap" type="com.chunkie.pmp_server.entity.Profile">
+        <id column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="profile_name" jdbcType="VARCHAR" property="profileName"/>
+        <result column="profile_species" jdbcType="VARCHAR" typeHandler="com.chunkie.pmp_server.handler.SpeciesEnumTypeHandler" property="profileSpecies"/>
+        <result column="profile_gender" jdbcType="VARCHAR" typeHandler="com.chunkie.pmp_server.handler.GenderEnumTypeHandler" property="profileGender"/>
+        <result column="profile_description" jdbcType="VARCHAR" property="profileDescription"/>
+        <result column="profile_age" jdbcType="INTEGER" property="profileAge"/>
+        <result column="profile_birth" jdbcType="DATE" property="profileBirth"/>
+        <result column="profile_latitude" jdbcType="FLOAT" property="profileLatitude"/>
+        <result column="profile_longitude" jdbcType="FLOAT" property="profileLongitude"/>
+    </resultMap>
+
+    <update id="updateLocation">
+        UPDATE profile_info
+        SET profile_latitude = #{latitude}, profile_longitude = #{longitude}
+        WHERE user_id = #{userId}
+    </update>
+</mapper>

@@ -19,4 +19,10 @@ public interface Constants {
         Integer EXCEPTION = 500;
     }
 
+    interface AWS{
+        String BUCKET = "pmp_server_bucket";
+        String ACCESS_KEY = "AKIAWOXAXXCRKAHULNK6";
+        String SECRET_KEY = "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";
+    }
+
 }

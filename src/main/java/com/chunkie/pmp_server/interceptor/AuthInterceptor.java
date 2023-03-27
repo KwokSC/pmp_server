@@ -4,7 +4,6 @@ import com.chunkie.pmp_server.annotation.LoginRequired;
 import com.chunkie.pmp_server.exception.UnauthorizedException;
 import com.chunkie.pmp_server.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -27,7 +26,9 @@ public class AuthInterceptor implements HandlerInterceptor {
         Method method = handlerMethod.getMethod();
         if (method.isAnnotationPresent(LoginRequired.class)) {
             String authToken = request.getHeader("Authorization");
-            if (authToken != null && authService.getUserByToken(authToken)!=null) {
+            System.out.println(authToken);
+            System.out.println(authService);
+            if (authService.getUserByToken(authToken)!=null) {
                 return true;
             } else {
                 throw new UnauthorizedException();
