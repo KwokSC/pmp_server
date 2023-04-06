@@ -1,10 +1,10 @@
 package com.chunkie.pmp_server.service;
 
-import com.chunkie.pmp_server.entity.Match;
 import com.chunkie.pmp_server.entity.Profile;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,10 +12,27 @@ import java.util.List;
 @Service
 public class MatchService {
 
-    public List<Match> getMatch(){
-        List<Match> matchList = new ArrayList<>();
+    @Resource
+    private PreferenceService preferenceService;
+
+    @Resource
+    private ProfileService profileService;
+
+    @Resource
+    private AuthService authService;
+
+    public List<Profile> getMatch(){
+        List<Profile> matchList = new ArrayList<>();
 
         return matchList;
+    }
+
+    public void like(){
+
+    }
+
+    public void dislike(){
+
     }
 
     private double getDistance(Profile matcher,Profile target){
