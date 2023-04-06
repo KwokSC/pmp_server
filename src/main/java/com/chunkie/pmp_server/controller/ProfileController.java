@@ -7,7 +7,9 @@ import com.chunkie.pmp_server.entity.Location;
 import com.chunkie.pmp_server.service.ProfileService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -33,8 +35,24 @@ public class ProfileController {
     }
 
     @LoginRequired
+    @RequestMapping("/uploadPhoto")
+    public ResponseObj uploadPhoto(@RequestParam(value = "photo")MultipartFile photo, HttpServletRequest request) throws IOException {
+        if (profileService.uploadPhoto(photo, request.getHeader("Authorization"))){
+            return new ResponseObj("Successfully upload a photo", Constants.Code.NORMAL, Constants.Msg.SUCCESS);
+        }else {
+            return new ResponseObj("Fail to upload", Constants.Code.EXCEPTION, Constants.Msg.FAIL);
+        }
+    }
+
+    @LoginRequired
+    @RequestMapping("/uploadMultiplePhotos")
+    public ResponseObj uploadMultiplePhotos(){
+        return new ResponseObj();
+    }
+
+    @LoginRequired
     @RequestMapping("/getProfilePhotos")
-    public ResponseObj getProfilePhotos(HttpServletRequest request) throws IOException {
+    public ResponseObj getProfilePhotos(HttpServletRequest request) {
         List<String> photos = profileService.getProfilePhotos(request.getHeader("Authorization"));
         return new ResponseObj(photos, Constants.Code.NORMAL, Constants.Msg.SUCCESS);
     }

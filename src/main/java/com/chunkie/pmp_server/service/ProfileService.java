@@ -27,8 +27,13 @@ public class ProfileService {
 
     public boolean uploadPhotos(List<MultipartFile> photos, String authToken) throws IOException {
         String userId = authService.getUserByToken(authToken);
-        s3Service.uploadPhotos(photos, userId);
+        s3Service.uploadMultiplePhotos(photos, userId);
         return false;
+    }
+
+    public boolean uploadPhoto(MultipartFile photo, String authToken) throws IOException {
+        String userId = authService.getUserByToken(authToken);
+        return s3Service.uploadPhoto(photo, userId);
     }
 
     public List<String> getProfilePhotos(String authToken) {

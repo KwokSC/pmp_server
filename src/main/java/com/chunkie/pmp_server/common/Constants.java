@@ -20,7 +20,7 @@ public interface Constants {
     }
 
     interface AWS{
-        String BUCKET = "pmp_server_bucket";
+        String BUCKET = "pmp-server-bucket";
     }
 
 }
