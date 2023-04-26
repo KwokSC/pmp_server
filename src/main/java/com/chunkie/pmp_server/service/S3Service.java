@@ -39,7 +39,6 @@ public class S3Service {
     }
 
     public boolean uploadPhoto(MultipartFile photo, String userId) throws IOException {
-
         String key = "profile/user_" + userId + "/photos/" + UUID.randomUUID().toString() + getExtension(photo);
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentType(photo.getContentType());

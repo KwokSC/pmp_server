@@ -9,9 +9,9 @@ public class Match {
 
     private Long matchId;
 
-    private String userOneId;
+    private String matcherId;
 
-    private String UserTwoId;
+    private String targetId;
 
     private Date matchDate;
 

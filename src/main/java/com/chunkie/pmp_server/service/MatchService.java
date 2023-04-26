@@ -1,16 +1,20 @@
 package com.chunkie.pmp_server.service;
 
+import com.chunkie.pmp_server.entity.Match;
 import com.chunkie.pmp_server.entity.Profile;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
 public class MatchService {
+
 
     @Resource
     private PreferenceService preferenceService;
@@ -27,8 +31,12 @@ public class MatchService {
         return matchList;
     }
 
-    public void like(){
-
+    public void like(String matcher, String target){
+        Match match = new Match();
+        match.setMatchId(UUID.randomUUID().getLeastSignificantBits());
+        match.setMatchDate(new Date());
+        match.setMatcherId(matcher);
+        match.setTargetId(target);
     }
 
     public void dislike(){

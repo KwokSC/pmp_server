@@ -4,6 +4,7 @@ import com.chunkie.pmp_server.annotation.LoginRequired;
 import com.chunkie.pmp_server.common.Constants;
 import com.chunkie.pmp_server.common.ResponseObj;
 import com.chunkie.pmp_server.entity.Location;
+import com.chunkie.pmp_server.entity.Profile;
 import com.chunkie.pmp_server.service.ProfileService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,17 @@ public class ProfileController {
 
     @Resource
     private ProfileService profileService;
+
+    @LoginRequired
+    @RequestMapping("/createProfile")
+    public ResponseObj createProfile(@RequestBody Profile profile,
+                                     HttpServletRequest request) {
+        if (profileService.createProfile(request.getHeader("Authorization"), profile) != 0) {
+            return new ResponseObj("Successfully update location", Constants.Code.NORMAL, Constants.Msg.SUCCESS);
+        }else {
+            return new ResponseObj("Fail to update location", Constants.Code.EXCEPTION, Constants.Msg.FAIL);
+        }
+    }
 
     @LoginRequired
     @RequestMapping("/updateLocation")
@@ -55,6 +67,11 @@ public class ProfileController {
     public ResponseObj getProfilePhotos(HttpServletRequest request) {
         List<String> photos = profileService.getProfilePhotos(request.getHeader("Authorization"));
         return new ResponseObj(photos, Constants.Code.NORMAL, Constants.Msg.SUCCESS);
+    }
+
+    @RequestMapping("/getProfilePhotosById")
+    public ResponseObj getProfilePhotosById(@RequestParam(value = "id")String userId){
+        return new ResponseObj(profileService.getProfilePhotosById(userId), Constants.Code.NORMAL, Constants.Msg.SUCCESS);
     }
 
 }

@@ -19,4 +19,9 @@
         SET profile_latitude = #{latitude}, profile_longitude = #{longitude}
         WHERE user_id = #{userId}
     </update>
+
+    <insert id="createProfile" parameterType="com.chunkie.pmp_server.entity.Profile">
+        INSERT INTO profile_info(user_id, profile_name, profile_age, profile_birth, profile_description, profile_gender, profile_species)
+        VALUES (#{userId}, #{profileName}, #{profileAge}, #{profileBirth}, #{profileDescription}, #{profileGender}, #{profileSpecies})
+    </insert>
 </mapper>

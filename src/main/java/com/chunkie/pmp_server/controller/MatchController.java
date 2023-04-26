@@ -29,7 +29,6 @@ public class MatchController {
     @LoginRequired
     @RequestMapping("/getMatch")
     public ResponseObj getMatch(){
-
         return new ResponseObj(null, Constants.Code.NORMAL, Constants.Msg.SUCCESS);
     }
 }
