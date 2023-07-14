@@ -26,8 +26,9 @@ public class MatchController {
     @Resource
     private AuthService authService;
 
-    @LoginRequired
+
     @RequestMapping("/getMatch")
+    @LoginRequired
     public ResponseObj getMatch(){
         return new ResponseObj(null, Constants.Code.NORMAL, Constants.Msg.SUCCESS);
     }

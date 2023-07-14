@@ -24,8 +24,9 @@ public class ProfileController {
     @Resource
     private ProfileService profileService;
 
-    @LoginRequired
+
     @RequestMapping("/createProfile")
+    @LoginRequired
     public ResponseObj createProfile(@RequestBody Profile profile,
                                      HttpServletRequest request) {
         if (profileService.createProfile(request.getHeader("Authorization"), profile) != 0) {
@@ -35,8 +36,9 @@ public class ProfileController {
         }
     }
 
-    @LoginRequired
+
     @RequestMapping("/updateLocation")
+    @LoginRequired
     public ResponseObj updateLocation(@RequestBody Location location,
                                       HttpServletRequest request) {
         if (profileService.updateLocation(request.getHeader("Authorization"), location.getLatitude(), location.getLongitude()) != 0) {
@@ -46,8 +48,9 @@ public class ProfileController {
         }
     }
 
-    @LoginRequired
+
     @RequestMapping("/uploadPhoto")
+    @LoginRequired
     public ResponseObj uploadPhoto(@RequestParam(value = "photo")MultipartFile photo, HttpServletRequest request) throws IOException {
         if (profileService.uploadPhoto(photo, request.getHeader("Authorization"))){
             return new ResponseObj("Successfully upload a photo", Constants.Code.NORMAL, Constants.Msg.SUCCESS);
@@ -56,14 +59,16 @@ public class ProfileController {
         }
     }
 
-    @LoginRequired
+
     @RequestMapping("/uploadMultiplePhotos")
+    @LoginRequired
     public ResponseObj uploadMultiplePhotos(){
         return new ResponseObj();
     }
 
-    @LoginRequired
+
     @RequestMapping("/getProfilePhotos")
+    @LoginRequired
     public ResponseObj getProfilePhotos(HttpServletRequest request) {
         List<String> photos = profileService.getProfilePhotos(request.getHeader("Authorization"));
         return new ResponseObj(photos, Constants.Code.NORMAL, Constants.Msg.SUCCESS);
