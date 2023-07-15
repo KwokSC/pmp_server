@@ -1,6 +1,10 @@
 spring:
   profiles:
     active: application-pc-dev
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/pmp_server?serverTimezone=UTC
+    username: root
+    password: 19980518
   redis:
     host: localhost
     port: 6379

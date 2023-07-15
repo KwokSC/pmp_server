@@ -24,9 +24,9 @@ public class ProfileController {
     @Resource
     private ProfileService profileService;
 
-    
-    @LoginRequired
+
     @RequestMapping("/createProfile")
+    @LoginRequired
     /**
     *@MethodName: createProfile
     *@Description: 
@@ -43,8 +43,8 @@ public class ProfileController {
         }
     }
 
-    @LoginRequired
     @RequestMapping("/updateLocation")
+    @LoginRequired
     /**
     *@MethodName: updateLocation
     *@Description: 
@@ -61,8 +61,8 @@ public class ProfileController {
         }
     }
 
-    @LoginRequired
     @RequestMapping("/uploadPhoto")
+    @LoginRequired
     /**
     *@MethodName: uploadPhoto
     *@Description: 
@@ -78,8 +78,8 @@ public class ProfileController {
         }
     }
 
-    @LoginRequired
     @RequestMapping("/uploadMultiplePhotos")
+    @LoginRequired
     /**
     *@MethodName: uploadMultiplePhotos
     *@Description: 
@@ -91,8 +91,8 @@ public class ProfileController {
         return new ResponseObj();
     }
 
-    @LoginRequired
     @RequestMapping("/getProfilePhotos")
+    @LoginRequired
     /**
     *@MethodName: getProfilePhotos
     *@Description: 
