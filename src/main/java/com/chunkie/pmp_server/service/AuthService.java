@@ -18,11 +18,14 @@ public class AuthService {
         String authToken = Jwts.builder()
                 .setSubject(id)
                 .signWith(SignatureAlgorithm.HS256, "secret-key")
-                .compact();;
+                .compact();
         stringRedisTemplate.opsForValue().set(authToken, id, Duration.ofMinutes(30));
         return authToken;
     }
 
+    public Boolean isTokenValid(String token){
+        return token != null && stringRedisTemplate.opsForValue().get(token) != null;
+    }
 
     public String getUserByToken(String token){
         return stringRedisTemplate.opsForValue().get(token);
