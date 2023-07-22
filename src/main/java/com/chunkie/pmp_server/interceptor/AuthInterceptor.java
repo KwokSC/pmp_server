@@ -19,15 +19,13 @@ public class AuthInterceptor implements HandlerInterceptor {
     private AuthService authService;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         if (!(handler instanceof HandlerMethod)) return true;
 
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
         if (method.isAnnotationPresent(LoginRequired.class)) {
             String authToken = request.getHeader("Authorization");
-            System.out.println(authToken);
-            System.out.println(authService);
             if (authService.getUserByToken(authToken)!=null) {
                 return true;
             } else {
