@@ -27,6 +27,13 @@ public class ProfileController {
 
     @RequestMapping("/createProfile")
     @LoginRequired
+    /**
+    *@MethodName: createProfile
+    *@Description: 
+    *@Author: chunkie
+    *@Date: 5/1/23
+    *@Version: 
+    */
     public ResponseObj createProfile(@RequestBody Profile profile,
                                      HttpServletRequest request) {
         if (profileService.createProfile(request.getHeader("Authorization"), profile) != 0) {
@@ -36,9 +43,15 @@ public class ProfileController {
         }
     }
 
-
     @RequestMapping("/updateLocation")
     @LoginRequired
+    /**
+    *@MethodName: updateLocation
+    *@Description: 
+    *@Author: chunkie
+    *@Date: 5/1/23
+    *@Version: 
+    */
     public ResponseObj updateLocation(@RequestBody Location location,
                                       HttpServletRequest request) {
         if (profileService.updateLocation(request.getHeader("Authorization"), location.getLatitude(), location.getLongitude()) != 0) {
@@ -48,9 +61,15 @@ public class ProfileController {
         }
     }
 
-
     @RequestMapping("/uploadPhoto")
     @LoginRequired
+    /**
+    *@MethodName: uploadPhoto
+    *@Description: 
+    *@Author: chunkie
+    *@Date: 5/1/23
+    *@Version: 
+    */
     public ResponseObj uploadPhoto(@RequestParam(value = "photo")MultipartFile photo, HttpServletRequest request) throws IOException {
         if (profileService.uploadPhoto(photo, request.getHeader("Authorization"))){
             return new ResponseObj("Successfully upload a photo", Constants.Code.NORMAL, Constants.Msg.SUCCESS);
@@ -59,22 +78,41 @@ public class ProfileController {
         }
     }
 
-
     @RequestMapping("/uploadMultiplePhotos")
     @LoginRequired
+    /**
+    *@MethodName: uploadMultiplePhotos
+    *@Description: 
+    *@Author: chunkie
+    *@Date: 5/1/23
+    *@Version: 
+    */
     public ResponseObj uploadMultiplePhotos(){
         return new ResponseObj();
     }
 
-
     @RequestMapping("/getProfilePhotos")
     @LoginRequired
+    /**
+    *@MethodName: getProfilePhotos
+    *@Description: 
+    *@Author: chunkie
+    *@Date: 5/1/23
+    *@Version: 
+    */
     public ResponseObj getProfilePhotos(HttpServletRequest request) {
         List<String> photos = profileService.getProfilePhotos(request.getHeader("Authorization"));
         return new ResponseObj(photos, Constants.Code.NORMAL, Constants.Msg.SUCCESS);
     }
 
     @RequestMapping("/getProfilePhotosById")
+    /**
+    *@MethodName: getProfilePhotosById
+    *@Description: 
+    *@Author: chunkie
+    *@Date: 5/1/23
+    *@Version: 
+    */
     public ResponseObj getProfilePhotosById(@RequestParam(value = "id")String userId){
         return new ResponseObj(profileService.getProfilePhotosById(userId), Constants.Code.NORMAL, Constants.Msg.SUCCESS);
     }
