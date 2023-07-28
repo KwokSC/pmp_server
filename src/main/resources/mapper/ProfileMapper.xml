@@ -24,4 +24,8 @@
         INSERT INTO profile_info(user_id, profile_name, profile_age, profile_birth, profile_description, profile_gender, profile_species)
         VALUES (#{userId}, #{profileName}, #{profileAge}, #{profileBirth}, #{profileDescription}, #{profileGender}, #{profileSpecies})
     </insert>
+
+    <select id="getProfileById" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT * FROM profile_info WHERE user_id = #{userId}
+    </select>
 </mapper>

@@ -51,4 +51,7 @@ public class ProfileService {
         return s3Service.getPhotos(userId);
     }
 
+    public Profile getProfileById(String userId){ return profileMapper.getProfileById(userId);}
+
+    public Profile getSelfProfile(String authToken){return profileMapper.getProfileById(authService.getUserByToken(authToken));}
 }

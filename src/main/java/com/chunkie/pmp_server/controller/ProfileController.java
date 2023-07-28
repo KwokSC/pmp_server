@@ -6,6 +6,7 @@ import com.chunkie.pmp_server.common.ResponseObj;
 import com.chunkie.pmp_server.entity.Location;
 import com.chunkie.pmp_server.entity.Profile;
 import com.chunkie.pmp_server.service.ProfileService;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,10 +30,10 @@ public class ProfileController {
     @LoginRequired
     /**
     *@MethodName: createProfile
-    *@Description: 
+    *@Description:
     *@Author: chunkie
     *@Date: 5/1/23
-    *@Version: 
+    *@Version:
     */
     public ResponseObj createProfile(@RequestBody Profile profile,
                                      HttpServletRequest request) {
@@ -47,10 +48,10 @@ public class ProfileController {
     @LoginRequired
     /**
     *@MethodName: updateLocation
-    *@Description: 
+    *@Description:
     *@Author: chunkie
     *@Date: 5/1/23
-    *@Version: 
+    *@Version:
     */
     public ResponseObj updateLocation(@RequestBody Location location,
                                       HttpServletRequest request) {
@@ -65,10 +66,10 @@ public class ProfileController {
     @LoginRequired
     /**
     *@MethodName: uploadPhoto
-    *@Description: 
+    *@Description:
     *@Author: chunkie
     *@Date: 5/1/23
-    *@Version: 
+    *@Version:
     */
     public ResponseObj uploadPhoto(@RequestParam(value = "photo")MultipartFile photo, HttpServletRequest request) throws IOException {
         if (profileService.uploadPhoto(photo, request.getHeader("Authorization"))){
@@ -82,10 +83,10 @@ public class ProfileController {
     @LoginRequired
     /**
     *@MethodName: uploadMultiplePhotos
-    *@Description: 
+    *@Description:
     *@Author: chunkie
     *@Date: 5/1/23
-    *@Version: 
+    *@Version:
     */
     public ResponseObj uploadMultiplePhotos(){
         return new ResponseObj();
@@ -95,10 +96,10 @@ public class ProfileController {
     @LoginRequired
     /**
     *@MethodName: getProfilePhotos
-    *@Description: 
+    *@Description:
     *@Author: chunkie
     *@Date: 5/1/23
-    *@Version: 
+    *@Version:
     */
     public ResponseObj getProfilePhotos(HttpServletRequest request) {
         List<String> photos = profileService.getProfilePhotos(request.getHeader("Authorization"));
@@ -108,13 +109,34 @@ public class ProfileController {
     @RequestMapping("/getProfilePhotosById")
     /**
     *@MethodName: getProfilePhotosById
-    *@Description: 
+    *@Description:
     *@Author: chunkie
     *@Date: 5/1/23
-    *@Version: 
+    *@Version:
     */
     public ResponseObj getProfilePhotosById(@RequestParam(value = "id")String userId){
         return new ResponseObj(profileService.getProfilePhotosById(userId), Constants.Code.NORMAL, Constants.Msg.SUCCESS);
+    }
+
+    @RequestMapping("/getProfileById")
+    public ResponseObj getProfileById(@RequestParam(value = "id") String userId){
+        return new ResponseObj(profileService.getProfileById(userId), Constants.Code.NORMAL, Constants.Msg.SUCCESS);
+    }
+
+    @RequestMapping("/getSelfProfile")
+    @LoginRequired
+    public ResponseObj getSelfProfile(HttpServletRequest request){
+        return new ResponseObj(profileService.getSelfProfile(request.getHeader("Authorization")), Constants.Code.NORMAL, Constants.Msg.SUCCESS);
+    }
+
+    @RequestMapping("/isNewUser")
+    @LoginRequired
+    public ResponseObj isNewUser(HttpServletRequest request){
+        if (profileService.getSelfProfile(request.getHeader("Authorization"))==null){
+            return new ResponseObj(true, Constants.Code.NORMAL, Constants.Msg.SUCCESS);
+        }else {
+            return new ResponseObj(false, Constants.Code.NORMAL, Constants.Msg.NEW);
+        }
     }
 
 }

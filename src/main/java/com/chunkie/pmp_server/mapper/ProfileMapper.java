@@ -12,4 +12,6 @@ public interface ProfileMapper {
                        @Param("longitude") float longitude);
 
     int createProfile(Profile profile);
+
+    Profile getProfileById(String id);
 }

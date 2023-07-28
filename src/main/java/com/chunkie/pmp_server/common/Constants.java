@@ -12,6 +12,7 @@ public interface Constants {
     interface Msg {
         String SUCCESS = "Successful request";
         String FAIL = "Fail request";
+        String NEW = "New User";
     }
 
     interface Code{
@@ -21,6 +22,11 @@ public interface Constants {
 
     interface AWS{
         String BUCKET = "pmp-server-bucket";
+    }
+
+    interface Auth{
+
+        long EXP = 30;
     }
 
 }

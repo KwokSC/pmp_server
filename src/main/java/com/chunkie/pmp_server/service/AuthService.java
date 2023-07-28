@@ -1,5 +1,6 @@
 package com.chunkie.pmp_server.service;
 
+import com.chunkie.pmp_server.common.Constants;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -19,7 +20,7 @@ public class AuthService {
                 .setSubject(id)
                 .signWith(SignatureAlgorithm.HS256, "secret-key")
                 .compact();
-        stringRedisTemplate.opsForValue().set(authToken, id, Duration.ofMinutes(30));
+        stringRedisTemplate.opsForValue().set(authToken, id, Duration.ofMinutes(Constants.Auth.EXP));
         return authToken;
     }
 

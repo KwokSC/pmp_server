@@ -1,5 +1,6 @@
 package com.chunkie.pmp_server.service;
 
+import com.chunkie.pmp_server.entity.AuthInfo;
 import com.chunkie.pmp_server.entity.User;
 import com.chunkie.pmp_server.mapper.UserMapper;
 import org.springframework.stereotype.Service;
@@ -15,20 +16,28 @@ public class UserService {
     @Resource
     private AuthService authService;
 
-    public String createAccount(User user){
+    public AuthInfo createAccount(User user){
+        AuthInfo authInfo = new AuthInfo();
         if (userMapper.addUser(user)!=0){
-            return authService.generateToken(user.getUserId());
+            authInfo.setUserId(user.getUserId());
+            authInfo.setToken(authService.generateToken(user.getUserId()));
+            authInfo.setActivated(0);
+            return authInfo;
         }else {
-            return "";
+            return null;
         }
     }
 
-    public String authenticateUser(User user){
+    public AuthInfo authenticateUser(User user){
         User u = userMapper.selectByAccount(user.getUserAccount());
+        AuthInfo authInfo = new AuthInfo();
         if (u != null && u.getUserPassword().equals(user.getUserPassword())){
-            return authService.generateToken(u.getUserId());
+            authInfo.setUserId(u.getUserId());
+            authInfo.setToken(authService.generateToken(u.getUserId()));
+            authInfo.setActivated(u.getUserActivate());
+            return authInfo;
         }else
-            return "";
+            return null;
     }
 
 }
