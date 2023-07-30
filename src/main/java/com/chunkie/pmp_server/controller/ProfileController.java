@@ -6,7 +6,6 @@ import com.chunkie.pmp_server.common.ResponseObj;
 import com.chunkie.pmp_server.entity.Location;
 import com.chunkie.pmp_server.entity.Profile;
 import com.chunkie.pmp_server.service.ProfileService;
-import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -79,17 +78,18 @@ public class ProfileController {
         }
     }
 
-    @RequestMapping("/uploadMultiplePhotos")
+    @RequestMapping("/uploadPhotos")
     @LoginRequired
     /**
-    *@MethodName: uploadMultiplePhotos
+    *@MethodName: uploadPhotos
     *@Description:
     *@Author: chunkie
     *@Date: 5/1/23
     *@Version:
     */
-    public ResponseObj uploadMultiplePhotos(){
-        return new ResponseObj();
+    public ResponseObj uploadPhotos(@RequestParam(value = "photos")List<MultipartFile> photos, HttpServletRequest request) throws IOException {
+        String authToken = request.getHeader("Authorization");
+        return new ResponseObj(profileService.uploadPhotos(photos, authToken), Constants.Code.NORMAL, Constants.Msg.SUCCESS);
     }
 
     @RequestMapping("/getProfilePhotos")
@@ -115,7 +115,8 @@ public class ProfileController {
     *@Version:
     */
     public ResponseObj getProfilePhotosById(@RequestParam(value = "id")String userId){
-        return new ResponseObj(profileService.getProfilePhotosById(userId), Constants.Code.NORMAL, Constants.Msg.SUCCESS);
+        List<String> photos = profileService.getProfilePhotosById(userId);
+        return new ResponseObj(photos, Constants.Code.NORMAL, Constants.Msg.SUCCESS);
     }
 
     @RequestMapping("/getProfileById")

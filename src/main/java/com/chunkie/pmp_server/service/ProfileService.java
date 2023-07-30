@@ -22,7 +22,7 @@ public class ProfileService {
     @Resource
     private S3Service s3Service;
 
-    public int createProfile(String authToken, Profile profile){
+    public int createProfile(String authToken, Profile profile) {
         profile.setUserId(authService.getUserByToken(authToken));
         return profileMapper.createProfile(profile);
     }
@@ -31,10 +31,9 @@ public class ProfileService {
         return profileMapper.updateLocation(authService.getUserByToken(authToken), latitude, longitude);
     }
 
-    public boolean uploadPhotos(List<MultipartFile> photos, String authToken) throws IOException {
+    public List<Integer> uploadPhotos(List<MultipartFile> photos, String authToken) throws IOException {
         String userId = authService.getUserByToken(authToken);
-        s3Service.uploadMultiplePhotos(photos, userId);
-        return false;
+        return s3Service.uploadMultiplePhotos(photos, userId);
     }
 
     public boolean uploadPhoto(MultipartFile photo, String authToken) throws IOException {
@@ -47,11 +46,15 @@ public class ProfileService {
         return s3Service.getPhotos(userId);
     }
 
-    public List<String> getProfilePhotosById(String userId){
+    public List<String> getProfilePhotosById(String userId) {
         return s3Service.getPhotos(userId);
     }
 
-    public Profile getProfileById(String userId){ return profileMapper.getProfileById(userId);}
+    public Profile getProfileById(String userId) {
+        return profileMapper.getProfileById(userId);
+    }
 
-    public Profile getSelfProfile(String authToken){return profileMapper.getProfileById(authService.getUserByToken(authToken));}
+    public Profile getSelfProfile(String authToken) {
+        return profileMapper.getProfileById(authService.getUserByToken(authToken));
+    }
 }

@@ -1,11 +1,9 @@
 package com.chunkie.pmp_server.controller;
 
-import com.chunkie.pmp_server.annotation.LoginRequired;
 import com.chunkie.pmp_server.common.Constants;
 import com.chunkie.pmp_server.common.ResponseObj;
 import com.chunkie.pmp_server.entity.AuthInfo;
 import com.chunkie.pmp_server.entity.User;
-import com.chunkie.pmp_server.service.AuthService;
 import com.chunkie.pmp_server.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
 @Slf4j
@@ -23,9 +20,6 @@ public class UserController {
 
     @Resource
     private UserService userService;
-
-    @Resource
-    private AuthService authService;
 
     @RequestMapping("/register")
     public ResponseObj createAccount(@RequestBody User user){

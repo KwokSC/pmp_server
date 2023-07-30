@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,8 +24,17 @@ public class S3Service {
     @Value(Constants.AWS.BUCKET)
     private String bucketName;
 
-    public void uploadFile(String key, InputStream inputStream) {
-        amazonS3.putObject(bucketName, key, inputStream, new ObjectMetadata());
+    public boolean uploadFile(String key, MultipartFile file) {
+        try {
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentLength(file.getSize());
+            metadata.setContentType(file.getContentType());
+            PutObjectResult result = amazonS3.putObject(bucketName, key, file.getInputStream(), new ObjectMetadata());
+            return result.getMetadata() != null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public void deleteFile(String key) {
@@ -38,23 +45,18 @@ public class S3Service {
         return amazonS3.getObject(bucketName, key);
     }
 
-    public boolean uploadPhoto(MultipartFile photo, String userId) throws IOException {
+    public boolean uploadPhoto(MultipartFile photo, String userId) {
         String key = "profile/user_" + userId + "/photos/" + UUID.randomUUID().toString() + getExtension(photo);
-        ObjectMetadata metadata = new ObjectMetadata();
-        metadata.setContentType(photo.getContentType());
-        metadata.setContentLength(photo.getSize());
-        PutObjectResult putObjectResult = amazonS3.putObject(bucketName, key, photo.getInputStream(), metadata);
-        return putObjectResult.getMetadata() != null;
+        return uploadFile(key, photo);
     }
 
-    public void uploadMultiplePhotos(List<MultipartFile> photos, String userId) throws IOException {
+    public List<Integer> uploadMultiplePhotos(List<MultipartFile> photos, String userId) {
+        List<Integer> result = new ArrayList<>();
         for (MultipartFile photo : photos) {
             String key = "profile/user_" + userId + "/photos/" + UUID.randomUUID().toString() + getExtension(photo);
-            ObjectMetadata metadata = new ObjectMetadata();
-            metadata.setContentType(photo.getContentType());
-            metadata.setContentLength(photo.getSize());
-            amazonS3.putObject(bucketName, key, photo.getInputStream(), metadata);
+            result.add(uploadFile(key, photo) ? 1 : 0);
         }
+        return result;
     }
 
     public List<String> getPhotos(String userId) {
@@ -81,12 +83,12 @@ public class S3Service {
         return url.toString();
     }
 
-    private String getExtension(MultipartFile file){
+    private String getExtension(MultipartFile file) {
         String originalName = file.getOriginalFilename();
         String extension = null;
-        if (originalName!=null){
+        if (originalName != null) {
             int dotIndex = originalName.lastIndexOf(".");
-            if (dotIndex>0){
+            if (dotIndex > 0) {
                 extension = originalName.substring(dotIndex);
             }
         }
