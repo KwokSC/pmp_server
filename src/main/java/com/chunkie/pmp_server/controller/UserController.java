@@ -22,6 +22,13 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping("/register")
+    /**
+     * @Description:
+     * @Param user
+     * @Return {@link ResponseObj}
+     * @Author: Sicheng
+     * @Date: 2023/8/1
+    **/
     public ResponseObj createAccount(@RequestBody User user){
         user.setUserId(UUID.randomUUID().toString());
         AuthInfo authInfo = userService.createAccount(user);
@@ -29,6 +36,13 @@ public class UserController {
     }
 
     @RequestMapping("/login")
+    /**
+     * @Description:
+     * @Param user
+     * @Return {@link ResponseObj}
+     * @Author: Sicheng
+     * @Date: 2023/8/1
+    **/
     public ResponseObj login(@RequestBody User user){
         AuthInfo authInfo = userService.authenticateUser(user);
         return !(authInfo == null) ? new ResponseObj(authInfo, Constants.Code.NORMAL, Constants.Msg.SUCCESS) : new ResponseObj("Fail to login", Constants.Code.EXCEPTION, Constants.Msg.FAIL);

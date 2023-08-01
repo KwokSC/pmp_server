@@ -46,14 +46,14 @@ public class S3Service {
     }
 
     public boolean uploadPhoto(MultipartFile photo, String userId) {
-        String key = "profile/user_" + userId + "/photos/" + UUID.randomUUID().toString() + getExtension(photo);
+        String key = "profile/user_" + userId + "/photos/" + UUID.randomUUID() + getExtension(photo);
         return uploadFile(key, photo);
     }
 
     public List<Integer> uploadMultiplePhotos(List<MultipartFile> photos, String userId) {
         List<Integer> result = new ArrayList<>();
         for (MultipartFile photo : photos) {
-            String key = "profile/user_" + userId + "/photos/" + UUID.randomUUID().toString() + getExtension(photo);
+            String key = "profile/user_" + userId + "/photos/" + UUID.randomUUID() + getExtension(photo);
             result.add(uploadFile(key, photo) ? 1 : 0);
         }
         return result;

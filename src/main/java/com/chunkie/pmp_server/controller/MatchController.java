@@ -29,6 +29,13 @@ public class MatchController {
 
     @RequestMapping("/getMatch")
     @LoginRequired
+    /**
+     * @Description:
+     * @Param 
+     * @Return {@link ResponseObj}
+     * @Author: Sicheng
+     * @Date: 2023/8/1
+    **/
     public ResponseObj getMatch(){
         return new ResponseObj(null, Constants.Code.NORMAL, Constants.Msg.SUCCESS);
     }
