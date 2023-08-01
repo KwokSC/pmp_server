@@ -53,8 +53,11 @@ public class S3Service {
     public List<Integer> uploadMultiplePhotos(List<MultipartFile> photos, String userId) {
         List<Integer> result = new ArrayList<>();
         for (MultipartFile photo : photos) {
-            String key = "profile/user_" + userId + "/photos/" + UUID.randomUUID() + getExtension(photo);
-            result.add(uploadFile(key, photo) ? 1 : 0);
+            if (photo.getSize() != 0){
+                String key = "profile/user_" + userId + "/photos/" + UUID.randomUUID() + getExtension(photo);
+                result.add(uploadFile(key, photo) ? 1 : 0);
+            }
+            else result.add(0);
         }
         return result;
     }
@@ -65,7 +68,7 @@ public class S3Service {
         ObjectListing objectListing = amazonS3.listObjects(bucketName, folderName);
         for (S3ObjectSummary objectSummary : objectListing.getObjectSummaries()) {
             S3Object object = amazonS3.getObject(bucketName, objectSummary.getKey());
-            photos.add(getPresignedUrl(object));
+            photos.add(getS3Url(object));
         }
         return photos;
     }
@@ -74,7 +77,7 @@ public class S3Service {
         return amazonS3.listBuckets();
     }
 
-    private String getPresignedUrl(S3Object s3Object) {
+    private String getS3Url(S3Object s3Object) {
         Date expiration = new Date(System.currentTimeMillis() + (1000 * 60 * 60)); // 1 hour from now
         GeneratePresignedUrlRequest generatePresignedUrlRequest = new GeneratePresignedUrlRequest(bucketName, s3Object.getKey())
                 .withMethod(HttpMethod.GET)

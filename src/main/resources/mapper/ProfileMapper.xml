@@ -5,8 +5,9 @@
     <resultMap id="BaseResultMap" type="com.chunkie.pmp_server.entity.Profile">
         <id column="user_id" jdbcType="VARCHAR" property="userId"/>
         <result column="profile_name" jdbcType="VARCHAR" property="profileName"/>
-        <result column="profile_species" jdbcType="VARCHAR" typeHandler="com.chunkie.pmp_server.handler.SpeciesEnumTypeHandler" property="profileSpecies"/>
-        <result column="profile_gender" jdbcType="VARCHAR" typeHandler="com.chunkie.pmp_server.handler.GenderEnumTypeHandler" property="profileGender"/>
+        <result column="profile_species" jdbcType="VARCHAR" typeHandler="com.chunkie.pmp_server.handler.GeneralEnumTypeHandler" property="profileSpecies"/>
+        <result column="profile_breed" jdbcType="VARCHAR" typeHandler="com.chunkie.pmp_server.handler.GeneralEnumTypeHandler" property="profileBreed"/>
+        <result column="profile_gender" jdbcType="VARCHAR" typeHandler="com.chunkie.pmp_server.handler.GeneralEnumTypeHandler" property="profileGender"/>
         <result column="profile_description" jdbcType="VARCHAR" property="profileDescription"/>
         <result column="profile_age" jdbcType="INTEGER" property="profileAge"/>
         <result column="profile_birth" jdbcType="DATE" property="profileBirth"/>
@@ -21,8 +22,8 @@
     </update>
 
     <insert id="createProfile" parameterType="com.chunkie.pmp_server.entity.Profile">
-        INSERT INTO profile_info(user_id, profile_name, profile_age, profile_birth, profile_description, profile_gender, profile_species)
-        VALUES (#{userId}, #{profileName}, #{profileAge}, #{profileBirth}, #{profileDescription}, #{profileGender}, #{profileSpecies})
+        INSERT INTO profile_info(user_id, profile_name, profile_age, profile_birth, profile_description, profile_gender, profile_species, profile_breed)
+        VALUES (#{userId}, #{profileName}, #{profileAge}, #{profileBirth}, #{profileDescription}, #{profileGender}, #{profileSpecies}, #{profileBreed})
     </insert>
 
     <select id="getProfileById" parameterType="java.lang.String" resultMap="BaseResultMap">

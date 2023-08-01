@@ -2,9 +2,11 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeHandlers>
-        <typeHandler handler="com.chunkie.pmp_server.handler.GenderEnumTypeHandler"
+        <typeHandler handler="com.chunkie.pmp_server.handler.GeneralEnumTypeHandler"
                      javaType="com.chunkie.pmp_server.common.Gender"/>
-        <typeHandler handler="com.chunkie.pmp_server.handler.SpeciesEnumTypeHandler"
+        <typeHandler handler="com.chunkie.pmp_server.handler.GeneralEnumTypeHandler"
                      javaType="com.chunkie.pmp_server.common.Species"/>
+        <typeHandler handler="com.chunkie.pmp_server.handler.GeneralEnumTypeHandler"
+                     javaType="com.chunkie.pmp_server.common.Breed"/>
     </typeHandlers>
 </configuration>

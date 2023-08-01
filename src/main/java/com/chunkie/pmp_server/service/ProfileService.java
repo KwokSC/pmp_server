@@ -31,12 +31,12 @@ public class ProfileService {
         return profileMapper.updateLocation(authService.getUserByToken(authToken), latitude, longitude);
     }
 
-    public List<Integer> uploadPhotos(List<MultipartFile> photos, String authToken) throws IOException {
+    public List<Integer> uploadPhotos(List<MultipartFile> photos, String authToken) {
         String userId = authService.getUserByToken(authToken);
         return s3Service.uploadMultiplePhotos(photos, userId);
     }
 
-    public boolean uploadPhoto(MultipartFile photo, String authToken) throws IOException {
+    public boolean uploadPhoto(MultipartFile photo, String authToken) {
         String userId = authService.getUserByToken(authToken);
         return s3Service.uploadPhoto(photo, userId);
     }
