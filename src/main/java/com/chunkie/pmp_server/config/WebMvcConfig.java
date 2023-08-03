@@ -1,6 +1,7 @@
 package com.chunkie.pmp_server.config;
 
 import com.chunkie.pmp_server.interceptor.AuthInterceptor;
+import com.chunkie.pmp_server.interceptor.IdempotentInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -15,9 +16,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
         return new AuthInterceptor();
     }
 
+    @Bean
+    public IdempotentInterceptor idempotentInterceptor(){
+        return new IdempotentInterceptor();
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authInterceptor()).addPathPatterns("/api/**");
+        registry.addInterceptor(idempotentInterceptor());
     }
 
     @Override

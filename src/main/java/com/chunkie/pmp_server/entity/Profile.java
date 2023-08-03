@@ -1,6 +1,5 @@
 package com.chunkie.pmp_server.entity;
 
-import com.chunkie.pmp_server.common.Breed;
 import com.chunkie.pmp_server.common.Gender;
 import com.chunkie.pmp_server.common.Species;
 import lombok.Data;
@@ -14,7 +13,7 @@ public class Profile {
 
     private String userId;
 
-    private Breed profileBreed;
+    private String profileBreed;
 
     private Species profileSpecies;
 

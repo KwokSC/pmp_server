@@ -1,6 +1,7 @@
 package com.chunkie.pmp_server.handler;
 
 import com.chunkie.pmp_server.common.Gender;
+import com.chunkie.pmp_server.common.Species;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedJdbcTypes;
@@ -11,7 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@MappedTypes(Gender.class)
+@MappedTypes({Gender.class, Species.class})
 @MappedJdbcTypes(JdbcType.VARCHAR)
 public class  GeneralEnumTypeHandler<E extends Enum<E>> extends BaseTypeHandler<E> {
     private final Class<E> type;

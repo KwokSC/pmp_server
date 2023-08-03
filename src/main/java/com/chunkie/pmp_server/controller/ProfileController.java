@@ -3,7 +3,6 @@ package com.chunkie.pmp_server.controller;
 import com.chunkie.pmp_server.annotation.LoginRequired;
 import com.chunkie.pmp_server.common.Constants;
 import com.chunkie.pmp_server.common.ResponseObj;
-import com.chunkie.pmp_server.entity.Location;
 import com.chunkie.pmp_server.entity.Profile;
 import com.chunkie.pmp_server.service.ProfileService;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,9 +53,10 @@ public class ProfileController {
      * @Author: Sicheng
      * @Date: 2023/8/1
     **/
-    public ResponseObj updateLocation(@RequestBody Location location,
+    public ResponseObj updateLocation(@RequestParam(value = "latitude") float latitude,
+                                      @RequestParam(value = "longitude") float longitude,
                                       HttpServletRequest request) {
-        if (profileService.updateLocation(request.getHeader("Authorization"), location.getLatitude(), location.getLongitude()) != 0) {
+        if (profileService.updateLocation(request.getHeader("Authorization"), latitude, longitude) != 0) {
             return new ResponseObj("Successfully update location", Constants.Code.NORMAL, Constants.Msg.SUCCESS);
         }else {
             return new ResponseObj("Fail to update location", Constants.Code.EXCEPTION, Constants.Msg.FAIL);

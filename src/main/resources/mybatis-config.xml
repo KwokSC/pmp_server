@@ -3,10 +3,6 @@
 <configuration>
     <typeHandlers>
         <typeHandler handler="com.chunkie.pmp_server.handler.GeneralEnumTypeHandler"
-                     javaType="com.chunkie.pmp_server.common.Gender"/>
-        <typeHandler handler="com.chunkie.pmp_server.handler.GeneralEnumTypeHandler"
                      javaType="com.chunkie.pmp_server.common.Species"/>
-        <typeHandler handler="com.chunkie.pmp_server.handler.GeneralEnumTypeHandler"
-                     javaType="com.chunkie.pmp_server.common.Breed"/>
     </typeHandlers>
 </configuration>

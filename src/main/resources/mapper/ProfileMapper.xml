@@ -6,8 +6,8 @@
         <id column="user_id" jdbcType="VARCHAR" property="userId"/>
         <result column="profile_name" jdbcType="VARCHAR" property="profileName"/>
         <result column="profile_species" jdbcType="VARCHAR" typeHandler="com.chunkie.pmp_server.handler.GeneralEnumTypeHandler" property="profileSpecies"/>
-        <result column="profile_breed" jdbcType="VARCHAR" typeHandler="com.chunkie.pmp_server.handler.GeneralEnumTypeHandler" property="profileBreed"/>
-        <result column="profile_gender" jdbcType="VARCHAR" typeHandler="com.chunkie.pmp_server.handler.GeneralEnumTypeHandler" property="profileGender"/>
+        <result column="profile_breed" jdbcType="VARCHAR" property="profileBreed"/>
+        <result column="profile_gender" jdbcType="VARCHAR" property="profileGender"/>
         <result column="profile_description" jdbcType="VARCHAR" property="profileDescription"/>
         <result column="profile_age" jdbcType="INTEGER" property="profileAge"/>
         <result column="profile_birth" jdbcType="DATE" property="profileBirth"/>
