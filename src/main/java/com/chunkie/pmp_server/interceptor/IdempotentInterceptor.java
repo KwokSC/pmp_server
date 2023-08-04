@@ -23,7 +23,7 @@ public class IdempotentInterceptor implements HandlerInterceptor {
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
         if (method.isAnnotationPresent(Idempotent.class)) {
-            String keyPrefix = ((HandlerMethod) handler).getMethodAnnotation(Idempotent.class).KeyPrefix();
+            String keyPrefix = ((HandlerMethod) handler).getMethodAnnotation(Idempotent.class).prefix();
             String token = request.getHeader("Idem-Token");
             if (idempotentService.validateToken(keyPrefix, token)){
                 throw new IdempotentException();

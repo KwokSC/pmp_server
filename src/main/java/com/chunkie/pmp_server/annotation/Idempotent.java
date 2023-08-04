@@ -8,7 +8,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Idempotent {
-    String KeyPrefix() default "";
+
+    String prefix() default "";
 
     int expiration() default 60;
 }
