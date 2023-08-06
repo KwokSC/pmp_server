@@ -1,5 +1,6 @@
 package com.chunkie.pmp_server.controller;
 
+import com.chunkie.pmp_server.annotation.Idempotent;
 import com.chunkie.pmp_server.annotation.LoginRequired;
 import com.chunkie.pmp_server.common.Constants;
 import com.chunkie.pmp_server.common.ResponseObj;
@@ -25,8 +26,9 @@ public class ProfileController {
 
 
     @RequestMapping("/createProfile")
+    @Idempotent(prefix = "createProfile", expiration = 30)
     @LoginRequired
-    /**
+    /**s
      * @Description:
      * @Param profile
      * @Param request
@@ -82,6 +84,7 @@ public class ProfileController {
     }
 
     @RequestMapping("/uploadPhotos")
+    @Idempotent(prefix = "uploadPhotos")
     @LoginRequired
     /**
      * @Description:
@@ -91,7 +94,7 @@ public class ProfileController {
      * @Author: Sicheng
      * @Date: 2023/8/1
     **/
-    public ResponseObj uploadPhotos(@RequestParam(value = "photos")List<MultipartFile> photos, HttpServletRequest request) throws IOException {
+    public ResponseObj uploadPhotos(@RequestParam(value = "photos")List<MultipartFile> photos, HttpServletRequest request) {
         String authToken = request.getHeader("Authorization");
         return new ResponseObj(profileService.uploadPhotos(photos, authToken), Constants.Code.NORMAL, Constants.Msg.SUCCESS);
     }

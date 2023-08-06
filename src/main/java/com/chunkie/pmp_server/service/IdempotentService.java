@@ -4,7 +4,6 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -16,7 +15,7 @@ public class IdempotentService {
 
     public String generateToken(String prefix, int expiration) {
         String token = UUID.randomUUID().toString();
-        setIdempotentValue(prefix + token, "", expiration);
+        setIdempotentValue(prefix + "_" + token, "", expiration);
         return token;
     }
 

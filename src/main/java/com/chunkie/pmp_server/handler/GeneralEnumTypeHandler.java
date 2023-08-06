@@ -32,7 +32,7 @@ public class  GeneralEnumTypeHandler<E extends Enum<E>> extends BaseTypeHandler<
     @Override
     public E getNullableResult(ResultSet rs, String columnName) throws SQLException {
         String value = rs.getString(columnName);
-        if (value == null) {
+        if (value == null || value.isEmpty()) {
             return null;
         }
         return Enum.valueOf(type, value);
@@ -41,7 +41,7 @@ public class  GeneralEnumTypeHandler<E extends Enum<E>> extends BaseTypeHandler<
     @Override
     public E getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         String value = rs.getString(columnIndex);
-        if (value == null) {
+        if (value == null || value.isEmpty()) {
             return null;
         }
         return Enum.valueOf(type, value);
@@ -50,7 +50,7 @@ public class  GeneralEnumTypeHandler<E extends Enum<E>> extends BaseTypeHandler<
     @Override
     public E getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         String value = cs.getString(columnIndex);
-        if (value == null) {
+        if (value == null || value.isEmpty()) {
             return null;
         }
         return Enum.valueOf(type, value);

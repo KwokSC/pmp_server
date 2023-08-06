@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -30,13 +33,15 @@ public class MatchController {
     @RequestMapping("/getMatch")
     @LoginRequired
     /**
-     * @Description:
-     * @Param
-     * @Return {@link com.chunkie.pmp_server.common.ResponseObj}
-     * @Author: Sicheng
-     * @Date: 2023/8/1
-    **/
-    public ResponseObj getMatch(){
-        return new ResponseObj(null, Constants.Code.NORMAL, Constants.Msg.SUCCESS);
+     * @Description: 
+     * @Param request
+     * @Return: {@link ResponseObj}
+     * @Author: chunkie
+     * @Date: 8/5/23
+     */
+    public ResponseObj getMatch(HttpServletRequest request){
+        List<String> matchList = new ArrayList<>();
+
+        return new ResponseObj(matchList, Constants.Code.NORMAL, Constants.Msg.SUCCESS);
     }
 }
