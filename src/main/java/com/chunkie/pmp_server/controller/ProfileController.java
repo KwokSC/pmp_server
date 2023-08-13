@@ -5,6 +5,7 @@ import com.chunkie.pmp_server.annotation.LoginRequired;
 import com.chunkie.pmp_server.common.Constants;
 import com.chunkie.pmp_server.common.ResponseObj;
 import com.chunkie.pmp_server.entity.Profile;
+import com.chunkie.pmp_server.service.IdempotentService;
 import com.chunkie.pmp_server.service.ProfileService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,8 @@ public class ProfileController {
     @Resource
     private ProfileService profileService;
 
+    @Resource
+    private IdempotentService idempotentService;
 
     @RequestMapping("/createProfile")
     @Idempotent(prefix = "createProfile", expiration = 30)
@@ -38,6 +41,7 @@ public class ProfileController {
     **/
     public ResponseObj createProfile(@RequestBody Profile profile,
                                      HttpServletRequest request) {
+        idempotentService.generateToken("createProfile", 30);
         if (profileService.createProfile(request.getHeader("Authorization"), profile) != 0) {
             return new ResponseObj("Successfully update location", Constants.Code.NORMAL, Constants.Msg.SUCCESS);
         }else {
@@ -96,6 +100,7 @@ public class ProfileController {
     **/
     public ResponseObj uploadPhotos(@RequestParam(value = "photos")List<MultipartFile> photos, HttpServletRequest request) {
         String authToken = request.getHeader("Authorization");
+        idempotentService.generateToken("uploadPhotos", 60);
         return new ResponseObj(profileService.uploadPhotos(photos, authToken), Constants.Code.NORMAL, Constants.Msg.SUCCESS);
     }
 
